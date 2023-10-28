@@ -1,4 +1,10 @@
-# Exemplo de uso:
-estoque = Estoque(gasolina=500, alcool=300, diesel=400, energia_solar=200)
-estoque.vender_produto('gasolina', 200)
-estoque.verificar_alerta()
+#exemplo de execução
+gasolina.receber_produto(50)
+gasolina.vender_produto(30)
+gasolina.verificar_estoque()
+
+energia_solar.vender_produto(60)
+energia_solar.verificar_estoque()
+
+alcool.vender_produto(60)
+alcool.verificar_estoque()
