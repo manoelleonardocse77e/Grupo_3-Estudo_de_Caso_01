@@ -1,0 +1,8 @@
+# Exemplo de uso:
+painel_solar = PainelSolar(potencia_nominal=300, area=20, eficiencia=0.85, alerta_minimo=200)
+energia_gerada = painel_solar.ler_energia_gerada(0.8)
+energia_convencional = 500
+percentual_economia = painel_solar.analise_eficiencia_economia(energia_gerada, energia_convencional)
+painel_solar.alerta_falha(energia_gerada)
+print(f"Energia gerada pelo painel solar: {energia_gerada} kWh")
+print(f"Percentual de economia: {percentual_economia} %")
