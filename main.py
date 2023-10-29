@@ -77,7 +77,7 @@ def Modulo2():
     conta_oleo = int(input("Litros de óleo usado:\n"))
     tempoT = input("Tempo gasto no serviço:\n(Minutos)\n")
     servico = "Troca de oleo"
-    
+
     os_oleo = {
         "Cliente": cliente,
         "Carro": carro,
@@ -102,7 +102,7 @@ def Modulo2():
     mecanico = input("Mecânico responsável:\n")
     tempoB = input("Tempo gasto no serviço:\n(minutos)\n")
     servico = "Balanceamento"
-    
+
     os_balanceamento = {
         "Cliente": cliente,
         "Carro": carro,
@@ -125,7 +125,7 @@ def Modulo2():
     data = input("Dia para o agendamento:\n(1-Segunda 2-Terça 3-Quarta 4-Quinta 5-Sexta)\n")
     mecanico = input("Mecânico responsável:\n")
     servico = int(input("Informe o serviço solicitado:\n(1-Troca de óleo e 2-Balanceamento)\n"))
-    
+
     if servico == 1:
         servico = "Troca de oleo"
     elif servico == 2:
@@ -289,7 +289,7 @@ def Modulo3():
         else:
             print("Opção inválida. Escolha uma opção válida.")
 
-              
+
 def Modulo5():
     def relatorio_vendas():
         dados = {'dias': ['2023-10-01', '2023-10-02', '2023-10-03', '2023-10-04'], 'vendas': [1000, 1200, 800, 1500]}
@@ -369,8 +369,8 @@ def Modulo5():
             case 3:
                 Relatorio_Energetico()
             case 4:
-                break
-
+                main()
+                
 def Modulo4():
   class PainelSolar:
     def __init__(self, potencia_nominal, area, eficiencia, alerta_minimo=100):
@@ -422,37 +422,37 @@ def Modulo4():
 
         else:
             print("Opção inválida. Escolha uma opção válida.")
-while True:
+
 #Começo menu de escolhas
-  print('Tipos de módulos disponiveis para operação: \n 1 - Módulo de Controle de Estoque de Produtos \n 2 - Módulo de Gerenciamento de Serviços Automativos \n 3 - Módulo de Gestão de Mercearia \n 4 - Módulo de Monitoramento Energetico \n 5 - Módulo de Relatórios e Análises \n')
-  print('-' * 50)
-  print('\n')
+def main():
+  while True:
+    # Menu de escolha de módulos
+    print('-' * 50)
+    print('\n')
+    print('Tipos de módulos disponiveis para operação: \n 1 - Módulo de Controle de Estoque de Produtos \n 2 - Módulo de Gerenciamento de Serviços Automativos \n 3 - Módulo de Gestão de Mercearia \n 4 - Módulo de Monitoramento Energetico \n 5 - Módulo de Relatórios e Análises \n 6 - Sair do programa \n')
 
-  escolha = int(input('Digite o número de um módulo que deseja operar: '))
-
-  while escolha not in [1,2,3,4,5]:
-    print('Módulo Invalido!')
     escolha = int(input('Digite o número de um módulo que deseja operar: '))
 
-  print('\n')
-  print('-' * 50)
-  print('\n')
+    print('\n')
+    
+    match escolha:
+      case 1:
+        Modulo1()
+      case 2:
+        Modulo2()
+      case 3:
+        Modulo3()
+      case 4:
+        Modulo4()
+      case 5:
+        Modulo5()
+      case 6:
+        print('Saindo do programa...')
+        break
+      case _:
+        print("Módulo inválido. Tente novamente.")
+        
+if __name__ == '__main__':
+  main()
 
-  match escolha:
-    case 1:
-      Modulo1()
-      break
-    case 2:
-      Modulo2()
-      break
-    case 3: 
-      Modulo3()
-      break
-    case 4:
-      Modulo4()
-      break
-    case 5:
-      Modulo5()
-      
-      break
 #Fim menu de escolhas
