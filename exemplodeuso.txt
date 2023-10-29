@@ -1,0 +1,7 @@
+# Exemplo de uso:
+mercearia = Mercearia()
+mercearia.adicionar_produto('Maçã', 'Orgânico', 50, 2, 'Maçãs frescas da fazenda local.')
+mercearia.adicionar_produto('Arroz', 'Consumo Consciente', 100, 5, 'Arroz integral cultivado de forma sustentável.')
+mercearia.vender_produto('Maçã', 20)
+mercearia.alerta_reposicao()
+print(mercearia.analise_desempenho('Maçã'))
