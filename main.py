@@ -3,69 +3,129 @@ import pandas as panda
 import matplotlib.pyplot as grafico
 def Modulo1():
 
-  class Estoque:
-      def __init__(self, nome_produto, quantidade_inicial, limite_minimo):
-          self.nome_produto = nome_produto
-          self.quantidade = quantidade_inicial
-          self.limite_minimo = limite_minimo
-
-      def receber_produto(self, quantidade):
-          self.quantidade += quantidade
-          self.atualizar_csv()
-          print(f"Recebido {quantidade} de {self.nome_produto}. Estoque atual: {self.quantidade}")
-
-      def vender_produto(self, quantidade):
-          if self.quantidade >= quantidade:
-              self.quantidade -= quantidade
-              self.atualizar_csv()
-              print(f"Vendido {quantidade} de {self.nome_produto}. Estoque atual: {self.quantidade}")
-          else:
-              print(f"Estoque insuficiente para vender {quantidade} de {self.nome_produto}.")
-
-      def verificar_estoque(self):
-          if self.quantidade <= self.limite_minimo:
-              print(f"ALERTA: Estoque de {self.nome_produto} está abaixo do limite mínimo de {self.limite_minimo}!")
-
-      def atualizar_csv(self):
-          data = []
-          with open('estoque.csv', 
-                    'w', newline='') as file:
-              writer = csv.writer(file)
-              for linha in data:
-                writer.writerow(linha)
-          with open('estoque.csv', 'r', newline='') as file:
-              reader = csv.reader(file)
-              for linha in reader:
-                  if linha and linha[0] == self.nome_produto and len(linha) >= 2:
-                      linha[1] = str(self.quantidade)
-                  data.append(linha)
-
-
-
-  # estoque inicial xD
-
-  # caso 1 para criar produto e definir seu nome, quantidade e limite de aviso
-  gasolina = Estoque("Gasolina", 100, 20)
-  alcool = Estoque("Álcool", 80, 40)
-  diesel = Estoque("Diesel", 100, 20)
-  energia_solar = Estoque("Energia Solar", 50, 10)
-
-  # caso 2 em que deve ser usado em um laço de repitação e com limite predefinido de produtos (caso precise)
-  # nome = str(input('Insira nome do produto = '))
-  # quantidade = float(input('Insira quantidade inicial do produto = '))
-  # limite = int(input('Limite quantitativo para aviso ='))
-  # produto1 = Estoque(nome, quantidade, limite)
-
-  #exemplo de execução
-  gasolina.receber_produto(50)
-  gasolina.vender_produto(30)
-  gasolina.verificar_estoque()
-
-  energia_solar.vender_produto(60)
-  energia_solar.verificar_estoque()
-
-  alcool.vender_produto(60)
-  alcool.verificar_estoque()
+      class Estoque:
+        def __init__(self, nome_produto, quantidade_inicial, limite_minimo):
+            self.nome_produto = nome_produto
+            self.quantidade = quantidade_inicial
+            self.limite_minimo = limite_minimo
+    
+        def receber_produto(self, quantidade):
+            self.quantidade += int(quantidade)
+            self.atualizar_csv()
+            print(f"Recebido {quantidade} de {self.nome_produto}. Estoque atual: {self.quantidade}")
+    
+        def vender_produto(self, quantidade):
+            if self.quantidade >= int(quantidade):
+                self.quantidade -= int(quantidade)
+                self.atualizar_csv()
+                print(f"Vendido {quantidade} de {self.nome_produto}. Estoque atual: {self.quantidade}")
+            else:
+                print(f"Estoque insuficiente para vender {quantidade} de {self.nome_produto}.")
+    
+        def verificar_estoque(self):
+            if self.quantidade <= self.limite_minimo:
+                print(f"ALERTA: Estoque de {self.nome_produto} está abaixo do limite mínimo de {self.limite_minimo}!")
+    
+        def atualizar_csv(self):
+            data = []
+    
+            with open('estoque.csv', 'r', newline='') as file:
+                reader = csv.reader(file)
+                for linha in reader:
+                    if linha and linha[0] == self.nome_produto and len(linha) >= 2:
+                        linha[1] = str(self.quantidade)
+                    data.append(linha)
+    
+            with open('estoque.csv', 'w', newline='') as file:
+                writer = csv.writer(file)
+                for linha in data:
+                    writer.writerow(linha)
+    
+    # definir nome, quantidade e limite de aviso
+    gasolina = Estoque("Gasolina", 0, 40)
+    alcool = Estoque("Álcool", 0, 40)
+    diesel = Estoque("Diesel", 0, 40)
+    energia_solar = Estoque("Energia Solar", 0, 40)
+    
+    while True:
+        print("=-=" * 10)
+        escolha = int(input('''[ 1 ] Vender Produto
+[ 2 ] Receber Produto
+[ 3 ] Verificar Estoque
+[ 4 ] Sair
+-> '''))
+    
+        if escolha == 1:
+            print("=-=" * 10)
+            escolhido = int(input('''Produto a ser vendido: 
+[ 1 ] Gasolina
+[ 2 ] Álcool 
+[ 3 ] Diesel
+[ 4 ] Energia Solar
+[ 5 ] Sair
+-> '''))
+            if escolhido == 1:
+                valor = int(input("Valor: "))
+                gasolina.vender_produto(valor)
+                gasolina.verificar_estoque()
+            elif escolhido == 2:
+                valor = int(input("Valor: "))
+                alcool.vender_produto(valor)
+                alcool.verificar_estoque()
+            elif escolhido == 3:
+                valor = int(input("Valor: "))
+                diesel.vender_produto(valor)
+                diesel.verificar_estoque()
+            elif escolhido == 4:
+                valor = int(input("Valor: "))
+                energia_solar.vender_produto(valor)
+                energia_solar.verificar_estoque()
+            elif escolhido == 5:
+                continue
+    
+        if escolha == 2:
+            print("=-=" * 10)
+            escolhido = int(input('''Produto a ser recebido: 
+[ 1 ] Gasolina
+[ 2 ] Álcool 
+[ 3 ] Diesel
+[ 4 ] Energia Solar
+[ 5 ] Sair
+-> '''))
+            if escolhido == 1:
+                valor = int(input("Quantidade: "))
+                gasolina.receber_produto(valor)
+            elif escolhido == 2:
+                valor = int(input("Quantidade: "))
+                alcool.receber_produto(valor)
+            elif escolhido == 3:
+                valor = int(input("Quantidade: "))
+                diesel.receber_produto(valor)
+            elif escolhido == 4:
+                valor = int(input("Quantidade "))
+                energia_solar.receber_produto(valor)
+        if escolha == 3:
+            print("=-=" * 10)
+            escolhido = int(input('''Produto a ser verificado: 
+[ 1 ] Gasolina
+[ 2 ] Álcool 
+[ 3 ] Diesel
+[ 4 ] Energia Solar
+[ 5 ] Sair
+-> '''))
+            if escolhido == 1:
+                gasolina.verificar_estoque()
+            elif escolhido == 2:
+                alcool.verificar_estoque()
+            elif escolhido == 3:
+                diesel.verificar_estoque()
+            elif escolhido == 4:
+                energia_solar.verificar_estoque()
+            elif escolhido == 5:
+                continue
+    
+        if escolha == 4:
+            break
 
 def Modulo2():
   def criar_os_oleo(cliente, carro, placa, mecanico, oleo, conta_oleo, tempoT):
