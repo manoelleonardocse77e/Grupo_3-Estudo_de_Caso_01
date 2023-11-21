@@ -23,12 +23,6 @@ def relatorio_vendas():
 
     print("Relatório de vendas gerado com sucesso.")
 
-import csv
-import random
-
-import csv
-import random
-
 def servicos_automotivos():
     servicos = []
 
