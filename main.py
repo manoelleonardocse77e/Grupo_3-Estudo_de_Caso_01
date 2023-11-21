@@ -489,7 +489,8 @@ def Modulo5():
                 main()
 
 def Modulo4():
-  class PainelSolar:
+
+    class PainelSolar:
         def __init__(self, potencia_nominal, area, eficiencia, alerta_minimo=100):
             self.potencia_nominal = potencia_nominal
             self.area = area
@@ -563,6 +564,7 @@ def Modulo4():
 
     if __name__ == "__main__":
         menu_interativo()
+
 
 #Começo menu de escolhas
 def main():
