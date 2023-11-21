@@ -1,0 +1,104 @@
+                                          1. Módulo de Controle de Estoque de Produtos:
+
+def atualizar_csv(self):								→1
+            data = []
+
+            with open('estoque.csv', 'r', newline='') as file:				→1						        
+                reader = csv.reader(file)							→1
+                for linha in reader:						→n ou 2n no pior caso
+                    if linha and linha[0] == self.nome_produto and len(linha) >= 2: 
+                        linha[1] = str(self.quantidade)
+                    data.append(linha)
+
+            with open('estoque.csv', 'w', newline='') as file:				→1
+                writer = csv.writer(file)
+                for linha in data:								→n
+                    writer.writerow(linha)
+
+
+                                                            (O(n))
+
+
+                                          2. Módulo de Gerenciamento de Serviços Automotivos:
+
+def agenda(cliente, carro, placa, servico, data, mecanico):					→1
+    cliente = input("Digite o nome do cliente: \n")						→1
+    carro = input("Digite as informações do carro:\n")						→1
+    placa = input("Placa do carro:\n")								→1
+    data = input("Dia para o agendamento:\n(1-Segunda 2-Terça 3-Quarta 4-Quinta 	5-Sexta)\n")											→1
+    mecanico = input("Mecânico responsável:\n")						→1
+    servico = int(input("Informe o serviço prestado:\n(1-Troca de óleo e 			2-Balanceamento)\n"))									→1
+    
+    if servico == 1:										→1
+        servico = "Troca de oleo"					                    →pior caso 1
+    elif servico == 2:										→1
+        servico = "Balanceamento"						         →pior caso1
+
+    semana = {
+        "1": "Segunda",
+        "2": "Terça",
+        "3": "Quarta",
+        "4": "Quinta",
+        "5": "Sexta"
+    }												→1
+
+    data = semana[data]									→1
+
+    agendamento = {
+        "Cliente": cliente,
+        "Carro": carro,
+        "Placa": placa,
+        "Data": data,
+        "Mecânico": mecanico,
+        "Serviço": servico
+    }												→1
+
+    registro(agendamento)									→1
+		
+				
+					
+
+                                                            (O(1))
+
+
+                                          3. Módulo de Monitoramento Energético:
+
+def ler_energia_gerada(self, radiacao_solar):						→1
+       energia_gerada = self.potencia_nominal * self.area * self.eficiencia * radiacao_solar →1
+       self.leituras_energia.append(energia_gerada)						→1
+       return energia_gerada 									→1
+
+
+
+						                                                (O(1))
+
+
+
+                                          4. Módulo de Relatórios e Análises:
+
+def relatorio_vendas():									→1
+
+    vendas_data = pd.read_csv('vendas.csv')							→n
+
+ 
+    vendas_data['data'] = pd.to_datetime(vendas_data['data'])				→1
+
+
+    plt.figure(figsize=(10, 5))									→1
+    plt.plot(vendas_data['data'], vendas_data['quantidade'], color='blue', linestyle='-',   marker='o')											→1
+    plt.title('Vendas Diárias')									→1
+    plt.xlabel('Data')										→1
+    plt.ylabel('Quantidade Vendida')								→1
+    plt.xticks(rotation=45)									→1
+    plt.tight_layout()										→1
+    plt.savefig('grafico_vendas_atualizado.png')						→1
+    plt.grid(True, linestyle='-', alpha=0.7)							→1
+    plt.show()											→1
+
+    print("Relatório de vendas gerado com sucesso.")					→1
+
+
+
+
+						                                                    (O(n))
+
