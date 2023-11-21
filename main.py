@@ -4,20 +4,22 @@ import matplotlib.pyplot as grafico
 from datetime import datetime
 
 def Modulo1():
-
-      class Estoque:
+    class Estoque:
         def __init__(self, nome_produto, quantidade_inicial, limite_minimo):
+            # (O(1))
             self.nome_produto = nome_produto
             self.quantidade = quantidade_inicial
             self.limite_minimo = limite_minimo
             self.vendas = []
 
         def receber_produto(self, quantidade):
+            # (0(1))
             self.quantidade += int(quantidade)
             self.atualizar_csv()
             print(f"Recebido {quantidade} de {self.nome_produto}. Estoque atual: {self.quantidade}")
 
         def vender_produto(self, quantidade):
+            # (0(1))
             if self.quantidade >= int(quantidade):
                 self.quantidade -= int(quantidade)
                 venda_info = {'data': datetime.now().strftime('%Y-%m-%d'), 'quantidade': int(quantidade)}
@@ -28,10 +30,12 @@ def Modulo1():
                 print(f"Estoque insuficiente para vender {quantidade} de {self.nome_produto}.")
 
         def verificar_estoque(self):
+          # (O(1))
             if self.quantidade <= self.limite_minimo:
                 print(f"ALERTA: Estoque de {self.nome_produto} está abaixo do limite mínimo de {self.limite_minimo}!")
 
         def atualizar_csv(self):
+          # (O(M))
             data = []
 
             with open('estoque.csv', 'r', newline='') as file:
@@ -46,28 +50,28 @@ def Modulo1():
                 for linha in data:
                     writer.writerow(linha)
 
-        def registrar_vendas_csv(self):
-          try:
-              with open('vendas.csv', 'r', newline=''):
-                  pass
-          except FileNotFoundError:
-              with open('vendas.csv', 'w', newline='') as file:
-                  writer = csv.writer(file)
-                  writer.writerow(['Produto', 'Data', 'Quantidade']) 
+    def registrar_vendas_csv(self):
+      # (o(k))
+        try:
+            with open('vendas.csv', 'r', newline=''):
+                pass
+        except FileNotFoundError:
+            with open('vendas.csv', 'w', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow(['Produto', 'Data', 'Quantidade']) 
 
-              with open('vendas.csv', 'a', newline='') as file:
-                  writer = csv.writer(file)
-                  for venda in self.vendas:
-                      writer.writerow([self.nome_produto, venda['data'], venda['quantidade']])
+        with open('vendas.csv', 'a', newline='') as file:
+            writer = csv.writer(file)
+            for venda in self.vendas:
+                writer.writerow([self.nome_produto, venda['data'], venda['quantidade']])
 
-    
-      # definir nome, quantidade e limite de aviso
-      gasolina = Estoque("Gasolina", 0, 40)
-      alcool = Estoque("Álcool", 0, 40)
-      diesel = Estoque("Diesel", 0, 40)
-      energia_solar = Estoque("Energia Solar", 0, 40)
+    # definir nome, quantidade e limite de aviso
+    gasolina = Estoque("Gasolina", 0, 40)
+    alcool = Estoque("Álcool", 0, 40)
+    diesel = Estoque("Diesel", 0, 40)
+    energia_solar = Estoque("Energia Solar", 0, 40)
 
-      while True:
+    while True:
         print("=-=" * 10)
         escolha = int(input('''[ 1 ] Vender Produto
 [ 2 ] Receber Produto
@@ -124,27 +128,40 @@ def Modulo1():
             elif escolhido == 4:
                 valor = int(input("Quantidade "))
                 energia_solar.receber_produto(valor)
+              
         if escolha == 3:
-            ordem = [gasolina.quantidade, alcool.quantidade, diesel.quantidade, energia_solar.quantidade]
-            ordem.sort(reverse=True)
-            print("=-=" * 10)
-            print("Estoque de Produtos")
-            print("=-=" * 10)
-            for c in range(len(ordem)):
+          contg = 0
+          conta = 0
+          contd = 0
+          conte = 0
+          ordem = [gasolina.quantidade, alcool.quantidade, diesel.quantidade, energia_solar.quantidade]
+          ordem.sort(reverse=True)
+          print("=-=" * 10)
+          print("Estoque de Produtos")
+          print("=-=" * 10)
+          for c in range(len(ordem)):
               if ordem[c] == 0:
                 continue
-              elif ordem[c] == gasolina.quantidade:
-                print(f"{c + 1}. Gasolina: {gasolina.quantidade}")
-              elif ordem[c] == alcool.quantidade:
-                print(f"{c + 1}. Alcool: {alcool.quantidade}")
-              elif ordem[c] == diesel.quantidade:
-                print(f"{c + 1}. Diesel: {diesel.quantidade}")
-              elif ordem[c] == energia_solar.quantidade:
-                print(f"{c + 1}. Energia Solar: {energia_solar.quantidade}")
-            gasolina.verificar_estoque()
-            alcool.verificar_estoque()
-            diesel.verificar_estoque()
-            energia_solar.verificar_estoque()
+              elif contg == 0:
+                if ordem[c] == gasolina.quantidade:
+                  print(f"{c + 1}. Gasolina: {gasolina.quantidade}")
+                  contg += 1
+              elif conta == 0:
+                if ordem[c] == alcool.quantidade:
+                  print(f"{c + 1}. Alcool: {alcool.quantidade}")
+                  conta += 1
+              elif contd == 0:
+                if ordem[c] == diesel.quantidade:
+                  print(f"{c + 1}. Diesel: {diesel.quantidade}")
+                  contd += 1
+              elif conte == 0:
+                if ordem[c] == energia_solar.quantidade:
+                  print(f"{c + 1}. Energia Solar: {energia_solar.quantidade}")
+                  conte += 1
+          gasolina.verificar_estoque()
+          alcool.verificar_estoque()
+          diesel.verificar_estoque()
+          energia_solar.verificar_estoque()
         if escolha == 4:
             break
 
