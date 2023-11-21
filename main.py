@@ -1,6 +1,8 @@
 import csv
 import pandas as panda
 import matplotlib.pyplot as grafico
+from datetime import datetime
+
 def Modulo1():
 
       class Estoque:
@@ -147,165 +149,191 @@ def Modulo1():
             break
 
 def Modulo2():
-  def criar_os_oleo(cliente, carro, placa, mecanico, oleo, conta_oleo, tempoT):
-    cliente = input("Digite o nome do cliente: \n")
-    carro = input("Digite as informações do carro:\n")
-    placa = input("Placa do carro:\n")
-    mecanico = input("Mecânico responsável:\n")
-    oleo = input("Óleo usado:\n")
-    conta_oleo = int(input("Litros de óleo usado:\n"))
-    tempoT = input("Tempo gasto no serviço:\n(Minutos)\n")
-    servico = "Troca de oleo"
-
-    os_oleo = {
-        "Cliente": cliente,
-        "Carro": carro,
-        "Placa": placa,
-        "Mecânico": mecanico,
-        "Óleo": oleo,
-        "Litros de Óleo": conta_oleo,
-        "Minutos": tempoT
-    }
-    registrar_oleo(os_oleo)
-
-  def registrar_oleo(os_oleo):
-    with open("ordem_oleo.csv", mode="a", newline="") as file:
-        writer = csv.DictWriter(file, fieldnames=os_oleo.keys())
-
-        writer.writerow(os_oleo)
-
-  def criar_os_balanceamento(cliente, carro, placa, mecanico, tempoB):
-    cliente = input("Digite o nome do cliente: \n")
-    carro = input("Digite as informações do carro:\n")
-    placa = input("Placa do carro:\n")
-    mecanico = input("Mecânico responsável:\n")
-    tempoB = input("Tempo gasto no serviço:\n(minutos)\n")
-    servico = "Balanceamento"
-
-    os_balanceamento = {
-        "Cliente": cliente,
-        "Carro": carro,
-        "Placa": placa,
-        "Mecânico": mecanico,
-        "Minutos": tempoB
-    }
-    registrar_balanceamento(os_balanceamento)
-
-  def registrar_balanceamento(os_balanceamento):
-    with open("ordem_balanceamento.csv", mode="a", newline="") as file:
-        writer = csv.DictWriter(file, fieldnames=os_balanceamento.keys())
-
-        writer.writerow(os_balanceamento)
-
-  def agenda(cliente, carro, placa, servico, data, mecanico):
-    cliente = input("Digite o nome do cliente: \n")
-    carro = input("Digite as informações do carro:\n")
-    placa = input("Placa do carro:\n")
-    data = input("Dia para o agendamento:\n(1-Segunda 2-Terça 3-Quarta 4-Quinta 5-Sexta)\n")
-    if data == 1:
-        seg = seg -1
-    elif data == 2:
-        ter = ter -1
-    elif data == 3:
-        quar = quar -1
-    elif data == 4:
-        quin = quin -1
-    elif data == 5:
-        sex = sex -1
-    mecanico = input("Mecânico responsável:\n")
-    servico = int(input("Informe o serviço solicitado:\n(1-Troca de óleo e 2-Balanceamento)\n"))
-
-    if servico == 1:
-        servico = "Troca de oleo"
-    elif servico == 2:
-        servico = "Balanceamento"
-
-    semana = {
-        "1": "Segunda",
-        "2": "Terça",
-        "3": "Quarta",
-        "4": "Quinta",
-        "5": "Sexta"
-    }
-
-    data = semana[data]
-
-    agendamento = {
-        "Cliente": cliente,
-        "Carro": carro,
-        "Placa": placa,
-        "Data": data,
-        "Mecânico": mecanico,
-        "Serviço": servico
-    }
-
-    registro(agendamento)
-
-  def registro(agendamento):
-    with open("agenda.csv", mode="a", newline="") as file:
-      writer = csv.DictWriter(file, fieldnames=agendamento.keys())
-
-      writer.writerow(agendamento)
-
-  menu = int(input("Digite qual operação deseja:\n1 - Agendamento \n2 - Ordem de Serviço \n3 - Consultar histórico \n4 - Apagar agenda\n"))
-  seg = 16
-  ter = 16
-  quar = 16
-  quin = 16
-  sex = 16
-  cliente = ""
-  carro = ""
-  placa = ""
-  servico = 0
-  data = 0
-  mecanico = ""
-  oleo = ""
-  conta_oleo = 0
-  tempoT = 0
-  tempoB = 0
-
-  if menu == 1:
-      agenda(cliente, carro, placa, servico, data, mecanico)
-  elif menu == 2:
-      serv = int(input("Informe o serviço:\n1- Troca de óleo \n2- Balanceamento\n"))
-      if serv == 1:
-          criar_os_oleo(cliente, carro, placa, mecanico, oleo, conta_oleo, tempoT)
-      elif serv == 2:
-          criar_os_balanceamento(cliente, carro, placa, mecanico, tempoB)
-  elif menu ==3:
-      busca_placa = {}
-      ordens_oleo = []
-      ordens_balanceamento = []
-      placa = input("Qual placa deseja procurar?\n")
-      print("Cliente\t\tCarro\t\tPlaca\t\tMecânico\t\tÓleo\t\tLitros\t\tMinutos")
-      with open("ordem_balanceamento.csv", mode="r", newline="") as file:
-          reader = csv.DictReader(file)
-          for linha in reader:
-              ordem = {}
-              for coluna in linha.keys():
-                  ordem[coluna] = linha[coluna]
-              if placa == ordem["Placa"]:
-                  ordens_balanceamento.append(ordem)
-                  print(f"{linha['Cliente']}\t\t{linha['Carro']}\t\t{linha['Placa']}\t\t{linha['Mecanico']}\t\tX\t\tX\t\t{linha['Minutos']}")
-
-      with open("ordem_oleo.csv", mode="r", newline="") as file:
-          reader = csv.DictReader(file)
-          for linha in reader:
-              ordem = {}
-              for coluna in linha.keys():
-                  ordem[coluna] = linha[coluna]
-              if placa == ordem["Placa"]:
-                  ordens_oleo.append(ordem)
-          for linha in ordens_oleo:
-              print(f"{linha['Cliente']}\t\t{linha['Carro']}\t\t{linha['Placa']}\t\t{linha['Mecanico']}\t\t{linha['Oleo']}\t\t{linha['Litros']}\t\t{linha['Minutos']}")
-
-  elif menu == 4:
+      
+      def normalize_date(date):
+          return datetime.strptime(date, '%Y-%m-%d').date()
+      
+      def ordenar_oleo():
+          with open("ordem_oleo.csv", mode='r', newline='') as file:
+              reader = csv.DictReader(file)
+              linhas = [linha for linha in reader]
+              linhas_ordenadas = sorted(linhas, key=lambda x: normalize_date(x['Data']), reverse=True)
+      
+          with open("ordem_oleo.csv", mode='w', newline='') as file:
+              writer = csv.DictWriter(file, fieldnames=linhas_ordenadas[0].keys())
+              writer.writeheader()
+              for linha in linhas_ordenadas:
+                  writer.writerow(linha)
+      
+      def criar_os_oleo(cliente, carro, placa, mecanico, oleo, conta_oleo, tempoT):
+          cliente = input("Digite o nome do cliente: \n")
+          carro = input("Digite as informações do carro:\n")
+          placa = input("Placa do carro:\n")
+          mecanico = input("Mecânico responsável:\n")
+          oleo = input("Óleo usado:\n")
+          conta_oleo = int(input("Litros de óleo usado:\n"))
+          tempoT = input("Tempo gasto no serviço:\n(Minutos)\n")
+          data = input("Data do serviço:\n(EX: 2023-11-21)\n")
+          servico = "Troca de oleo"
+          
+          os_oleo = {
+              "Cliente": cliente,
+              "Carro": carro,
+              "Placa": placa,
+              "Mecânico": mecanico,
+              "Óleo": oleo,
+              "Litros de Óleo": conta_oleo,
+              "Minutos": tempoT,
+              "Data": data
+          }
+      
+          registrar_oleo(os_oleo)
+          ordenar_oleo()
+      
+      def registrar_oleo(os_oleo):
+          with open("ordem_oleo.csv", mode="a", newline="") as file:
+              writer = csv.DictWriter(file, fieldnames=os_oleo.keys())
+      
+              writer.writerow(os_oleo)
+      
+      def ordenar_balanceamento():
+          with open("ordem_balanceamento.csv", mode='r', newline='') as file:
+              reader = csv.DictReader(file)
+              linhas = [linha for linha in reader]
+              linhas_ordenadas = sorted(linhas, key=lambda x: normalize_date(x['Data']), reverse=True)
+      
+          with open("ordem_balanceamento.csv", mode='w', newline='') as file:
+              writer = csv.DictWriter(file, fieldnames=linhas_ordenadas[0].keys())
+              writer.writeheader()
+              for linha in linhas_ordenadas:
+                  writer.writerow(linha)
+      
+      def criar_os_balanceamento(cliente, carro, placa, mecanico, tempoB):
+          cliente = input("Digite o nome do cliente: \n")
+          carro = input("Digite as informações do carro:\n")
+          placa = input("Placa do carro:\n")
+          mecanico = input("Mecânico responsável:\n")
+          tempoB = input("Tempo gasto no serviço:\n(minutos)\n")
+          data = input("Data do serviço:\n(EX: 2023-11-21)\n")
+          servico = "Balanceamento"
+          
+          os_balanceamento = {
+              "Cliente": cliente,
+              "Carro": carro,
+              "Placa": placa,
+              "Mecânico": mecanico,
+              "Minutos": tempoB,
+              "Data": data
+          }
+      
+          registrar_balanceamento(os_balanceamento)
+          ordenar_balanceamento()
+      
+      def registrar_balanceamento(os_balanceamento):
+          with open("ordem_balanceamento.csv", mode="a", newline="") as file:
+              writer = csv.DictWriter(file, fieldnames=os_balanceamento.keys())
+      
+              writer.writerow(os_balanceamento)
+      
+      def agenda(cliente, carro, placa, servico, data, mecanico):
+          cliente = input("Digite o nome do cliente: \n")
+          carro = input("Digite as informações do carro:\n")
+          placa = input("Placa do carro:\n")
+          data = input("Dia para o agendamento:\n(1-Segunda 2-Terça 3-Quarta 4-Quinta 5-Sexta)\n")
+          mecanico = input("Mecânico responsável:\n")
+          servico = int(input("Informe o serviço prestado:\n(1-Troca de óleo e 2-Balanceamento)\n"))
+          
+          if servico == 1:
+              servico = "Troca de oleo"
+          elif servico == 2:
+              servico = "Balanceamento"
+      
+          semana = {
+              "1": "Segunda",
+              "2": "Terça",
+              "3": "Quarta",
+              "4": "Quinta",
+              "5": "Sexta"
+          }
+      
+          data = semana[data]
+      
+          agendamento = {
+              "Cliente": cliente,
+              "Carro": carro,
+              "Placa": placa,
+              "Data": data,
+              "Mecânico": mecanico,
+              "Serviço": servico
+          }
+      
+          registro(agendamento)
+      
+      def registro(agendamento):
+          with open("agenda.csv", mode="a", newline="") as file:
+              writer = csv.DictWriter(file, fieldnames=agendamento.keys())
+      
+              writer.writerow(agendamento)
+      
+      menu = int(input("Digite qual operação deseja:\n(1- Agendamento 2- Ordem de Serviço 3-Consultar histórico 4- Apagar agenda)\n"))
       seg = 16
       ter = 16
       quar = 16
       quin = 16
       sex = 16
-
+      cliente = ""
+      carro = ""
+      placa = ""
+      servico = 0
+      data = 0
+      mecanico = ""
+      oleo = ""
+      conta_oleo = 0
+      tempoT = 0
+      tempoB = 0
+      
+      if menu == 1:
+           agenda(cliente, carro, placa, servico, data, mecanico)
+      elif menu == 2:
+          serv = int(input("Informe o serviço:\n(1- Troca de óleo 2- Balanceamento)\n"))
+          if serv == 1:
+              criar_os_oleo(cliente, carro, placa, mecanico, oleo, conta_oleo, tempoT)
+          elif serv == 2:
+              criar_os_balanceamento(cliente, carro, placa, mecanico, tempoB)
+      elif menu ==3:
+          busca_placa = {}
+          ordens_oleo = []
+          ordens_balanceamento = []
+          placa = input("Qual placa deseja procurar?\n")
+          print("Cliente\t\tCarro\t\tPlaca\t\tMecânico\t\tÓleo\t\tLitros\t\tMinutos")
+          with open("ordem_balanceamento.csv", mode="r", newline="") as file:
+              reader = csv.DictReader(file)
+              for linha in reader:
+                  ordem = {}
+                  for coluna in linha.keys():
+                      ordem[coluna] = linha[coluna]
+                  if placa == ordem["Placa"]:
+                      ordens_balanceamento.append(ordem)
+                      print(f"{linha['Cliente']}\t\t{linha['Carro']}\t\t{linha['Placa']}\t\t{linha['Mecanico']}\t\t\tX\t\tX\t\t{linha['Minutos']}")
+      
+          with open("ordem_oleo.csv", mode="r", newline="") as file:
+              reader = csv.DictReader(file)
+              for linha in reader:
+                  ordem = {}
+                  for coluna in linha.keys():
+                      ordem[coluna] = linha[coluna]
+                  if placa == ordem["Placa"]:
+                      ordens_oleo.append(ordem)
+              for linha in ordens_oleo:
+                  print(f"{linha['Cliente']}\t\t{linha['Carro']}\t\t{linha['Placa']}\t\t{linha['Mecanico']}\t\t\t{linha['Oleo']}\t\t{linha['Litros']}\t\t{linha['Minutos']}")
+      
+      elif menu == 4:
+          seg = 16
+          ter = 16
+          quar = 16
+          quin = 16
+          sex = 16
+            
 def Modulo3():
     class Mercearia:
         def __init__(self):
