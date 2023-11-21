@@ -1,13 +1,15 @@
-import pandas as panda
+import pandas as pd
 import matplotlib.pyplot as grafico
+import csv
+import random
 def relatorio_vendas():
-    # Read sales data from 'vendas.csv'
+
     vendas_data = pd.read_csv('vendas.csv')
 
-    # Convert the 'data' column to datetime for proper sorting
+ 
     vendas_data['data'] = pd.to_datetime(vendas_data['data'])
 
-    # Plotting the sales data
+
     plt.figure(figsize=(10, 5))
     plt.plot(vendas_data['data'], vendas_data['quantidade'], color='blue', linestyle='-', marker='o')
     plt.title('Vendas Diárias')
@@ -21,30 +23,54 @@ def relatorio_vendas():
 
     print("Relatório de vendas gerado com sucesso.")
 
+import csv
+import random
+
+import csv
+import random
 
 def servicos_automotivos():
-  servicos = [
-    {'servico': 'troca de óleo', 'tempo': 25, 'satisfacao': 4.2},
-    {'servico': 'troca de pneus', 'tempo': 47, 'satisfacao': 5.0},
-    {'servico': 'reparo de freios', 'tempo': 90, 'satisfacao': 2.5},
-]
-  Tmedio = sum(t['tempo'] for t in servicos) / len(servicos)
-  Smedia = sum(s['satisfacao'] for s in servicos) / len(servicos)
-  with open('relatorio_desempenho_servicos.txt', 'w') as arq:
-    arq.write("Relatório de Desempenho de Serviços\n")
-    arq.write((50 * "-") + "\n")
-    arq.write(f"Total de Serviços: {len(servicos)}\n")
-    arq.write(f"Tempo Médio Gasto: {Tmedio} min\n")
-    arq.write(f"Satisfação Média do Consumidor: {Smedia}\n")
-    arq.write("Detalhes dos Serviços:\n")
-    for servico in servicos:
-        arq.write(f"Serviço: {servico['servico']}\n")
-        arq.write(f"Tempo de Execução: {servico['tempo_execucao']} minutos\n")
-        arq.write(f"Satisfação do Cliente: {servico['satisfacao']} de 5\n")
-        arq.write(50 * "-" )
-  print("relatorio salvo")
+    servicos = []
 
-def Relatorio_Energetico()
+    with open("ordem_balanceamento.csv", mode="r", newline="") as file:
+        reader = csv.DictReader(file)
+
+        for linha in reader:
+            avaliacao = random.uniform(1, 5)
+            servico = {
+                'servico': linha['Servico'],
+                'tempo': int(linha['Minutos']),
+                'satisfacao': float(linha['Satisfacao']),
+                'avaliacao': round(avaliacao, 1)
+            }
+            servicos.append(servico)
+
+            print(f"Cliente: {linha['Cliente']}\tCarro: {linha['Carro']}\tPlaca: {linha['Placa']}\tMecânico: {linha['Mecanico']}\tTempo: {linha['Minutos']} minutos")
+            print(f"Serviço: {servico['servico']}\tTempo de Execução: {servico['tempo']} minutos\tSatisfação do Cliente: {servico['satisfacao']} de 5\tAvaliação: {servico['avaliacao']} de 5")
+            print(50 * "-")
+
+    Tmedio = sum(t['tempo'] for t in servicos) / len(servicos)
+    Smedia = sum(s['satisfacao'] for s in servicos) / len(servicos)
+
+    with open('relatorio_desempenho_servicos.txt', 'w') as arq:
+        arq.write("Relatório de Desempenho de Serviços\n")
+        arq.write((50 * "-") + "\n")
+        arq.write(f"Total de Serviços: {len(servicos)}\n")
+        arq.write(f"Tempo Médio Gasto: {Tmedio} min\n")
+        arq.write(f"Satisfação Média do Consumidor: {Smedia}\n")
+        arq.write("Detalhes dos Serviços:\n")
+        for servico in servicos:
+            arq.write(f"Cliente: {linha['Cliente']}\tCarro: {linha['Carro']}\tPlaca: {linha['Placa']}\tMecânico: {linha['Mecanico']}\tTempo: {linha['Minutos']} minutos\n")
+            arq.write(f"Serviço: {servico['servico']}\tTempo de Execução: {servico['tempo']} minutos\tSatisfação do Cliente: {servico['satisfacao']} de 5\tAvaliação: {servico['avaliacao']} de 5\n")
+            arq.write(50 * "-")
+
+    print("Relatório salvo")
+
+
+
+
+
+def Relatorio_Energetico():
   EsolarGerada = 5000 
   KWh = 0.12  
   instalacao = 15000 
@@ -68,7 +94,7 @@ def Relatorio_Energetico()
   KWh = 0.12  
   instalacao = 15000  
   print("Análise salva no arquivo 'analise_energia_solar.txt'")
-while True
+while True:
   print(50*'-')
   print("\n 1 para acessar os relatorios de vendas \n 2 Desempenho dos servicos automotivos \n 3 para acessar o relatorio de energia \n 4 para retornar")
   caso = int(input(""))
