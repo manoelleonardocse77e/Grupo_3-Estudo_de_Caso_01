@@ -38,8 +38,8 @@ def criar_os_oleo(cliente, carro, placa, mecanico, oleo, conta_oleo, tempoT):
         "Data": data
     }
 
-    ordenar_oleo()
     registrar_oleo(os_oleo)
+    ordenar_oleo()
 
 def registrar_oleo(os_oleo):
     with open("ordem_oleo.csv", mode="a", newline="") as file:
@@ -77,8 +77,8 @@ def criar_os_balanceamento(cliente, carro, placa, mecanico, tempoB):
         "Data": data
     }
 
-    ordenar_balanceamento()
     registrar_balanceamento(os_balanceamento)
+    ordenar_balanceamento()
 
 def registrar_balanceamento(os_balanceamento):
     with open("ordem_balanceamento.csv", mode="a", newline="") as file:
