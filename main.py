@@ -8,6 +8,7 @@ def Modulo1():
             self.nome_produto = nome_produto
             self.quantidade = quantidade_inicial
             self.limite_minimo = limite_minimo
+            self.vendas = []
     
         def receber_produto(self, quantidade):
             self.quantidade += int(quantidade)
@@ -17,6 +18,8 @@ def Modulo1():
         def vender_produto(self, quantidade):
             if self.quantidade >= int(quantidade):
                 self.quantidade -= int(quantidade)
+                venda_info = {'data': datetime.now().strftime('%Y-%m-%d'), 'quantidade': int(quantidade)}
+                self.vendas.append(vendas_info)
                 self.atualizar_csv()
                 print(f"Vendido {quantidade} de {self.nome_produto}. Estoque atual: {self.quantidade}")
             else:
@@ -40,6 +43,20 @@ def Modulo1():
                 writer = csv.writer(file)
                 for linha in data:
                     writer.writerow(linha)
+         
+       def registrar_vendas_csv(self):
+        try:
+            with open('vendas.csv', 'r', newline=''):
+                pass
+        except FileNotFoundError:
+            with open('vendas.csv', 'w', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow(['Produto', 'Data', 'Quantidade']) 
+
+        with open('vendas.csv', 'a', newline='') as file:
+            writer = csv.writer(file)
+            for venda in self.vendas:
+                writer.writerow([self.nome_produto, venda['data'], venda['quantidade']])
     
     # definir nome, quantidade e limite de aviso
     gasolina = Estoque("Gasolina", 0, 40)
@@ -105,25 +122,26 @@ def Modulo1():
                 valor = int(input("Quantidade "))
                 energia_solar.receber_produto(valor)
         if escolha == 3:
+            ordem = [gasolina.quantidade, alcool.quantidade, diesel.quantidade, energia_solar.quantidade]
+            ordem.sort(reverse=True)
             print("=-=" * 10)
-            escolhido = int(input('''Produto a ser verificado: 
-[ 1 ] Gasolina
-[ 2 ] Álcool 
-[ 3 ] Diesel
-[ 4 ] Energia Solar
-[ 5 ] Sair
--> '''))
-            if escolhido == 1:
-                gasolina.verificar_estoque()
-            elif escolhido == 2:
-                alcool.verificar_estoque()
-            elif escolhido == 3:
-                diesel.verificar_estoque()
-            elif escolhido == 4:
-                energia_solar.verificar_estoque()
-            elif escolhido == 5:
+            print("Estoque de Produtos")
+            print("=-=" * 10)
+            for c in range(len(ordem)):
+              if ordem[c] == 0:
                 continue
-    
+              elif ordem[c] == gasolina.quantidade:
+                print(f"{c + 1}. Gasolina: {gasolina.quantidade}")
+              elif ordem[c] == alcool.quantidade:
+                print(f"{c + 1}. Alcool: {alcool.quantidade}")
+              elif ordem[c] == diesel.quantidade:
+                print(f"{c + 1}. Diesel: {diesel.quantidade}")
+              elif ordem[c] == energia_solar.quantidade:
+                print(f"{c + 1}. Energia Solar: {energia_solar.quantidade}")
+            gasolina.verificar_estoque()
+            alcool.verificar_estoque()
+            diesel.verificar_estoque()
+            energia_solar.verificar_estoque()
         if escolha == 4:
             break
 
