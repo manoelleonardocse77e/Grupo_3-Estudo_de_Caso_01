@@ -1,22 +1,25 @@
 import pandas as panda
 import matplotlib.pyplot as grafico
 def relatorio_vendas():
-  dados = { 'dias': ['2023-10-01', '2023-10-02', '2023-10-03', '2023-10-04'], 'vendas': [1000, 1200, 800, 1500]}
-  dataframe = panda.DataFrame(dados)
-  dataframe.to_csv('relatorio_vendas.csv', index=False)
-  grafico.figure(figsize=(10, 5))
-  grafico.plot(dataframe['dias'], dataframe['vendas'],color='green', linestyle = '-', marker='o')
-  grafico.title('Vendas Diárias')
-  grafico.xlabel('Data')
-  grafico.ylabel('Vendas')
-  grafico.xticks(rotation=45)
-  grafico.tight_layout()
-  grafico.savefig('grafico_vendas.png')
-  grafico.grid(True, linestyle='-', alpha=0.7)
-  with open('relatorio.txt', 'w') as file:
-    file.write("Relatório de Vendas\n")
-    file.write(dataframe.to_string(index=False))
-  print("Relatório de vendas gerado com sucesso.")
+    # Read sales data from 'vendas.csv'
+    vendas_data = pd.read_csv('vendas.csv')
+
+    # Convert the 'data' column to datetime for proper sorting
+    vendas_data['data'] = pd.to_datetime(vendas_data['data'])
+
+    # Plotting the sales data
+    plt.figure(figsize=(10, 5))
+    plt.plot(vendas_data['data'], vendas_data['quantidade'], color='blue', linestyle='-', marker='o')
+    plt.title('Vendas Diárias')
+    plt.xlabel('Data')
+    plt.ylabel('Quantidade Vendida')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.savefig('grafico_vendas_atualizado.png')
+    plt.grid(True, linestyle='-', alpha=0.7)
+    plt.show()
+
+    print("Relatório de vendas gerado com sucesso.")
 
 
 def servicos_automotivos():
