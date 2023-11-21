@@ -9,12 +9,12 @@ def Modulo1():
             self.quantidade = quantidade_inicial
             self.limite_minimo = limite_minimo
             self.vendas = []
-    
+
         def receber_produto(self, quantidade):
             self.quantidade += int(quantidade)
             self.atualizar_csv()
             print(f"Recebido {quantidade} de {self.nome_produto}. Estoque atual: {self.quantidade}")
-    
+
         def vender_produto(self, quantidade):
             if self.quantidade >= int(quantidade):
                 self.quantidade -= int(quantidade)
@@ -24,54 +24,55 @@ def Modulo1():
                 print(f"Vendido {quantidade} de {self.nome_produto}. Estoque atual: {self.quantidade}")
             else:
                 print(f"Estoque insuficiente para vender {quantidade} de {self.nome_produto}.")
-    
+
         def verificar_estoque(self):
             if self.quantidade <= self.limite_minimo:
                 print(f"ALERTA: Estoque de {self.nome_produto} está abaixo do limite mínimo de {self.limite_minimo}!")
-    
+
         def atualizar_csv(self):
             data = []
-    
+
             with open('estoque.csv', 'r', newline='') as file:
                 reader = csv.reader(file)
                 for linha in reader:
                     if linha and linha[0] == self.nome_produto and len(linha) >= 2:
                         linha[1] = str(self.quantidade)
                     data.append(linha)
-    
+
             with open('estoque.csv', 'w', newline='') as file:
                 writer = csv.writer(file)
                 for linha in data:
                     writer.writerow(linha)
-         
-       def registrar_vendas_csv(self):
-        try:
-            with open('vendas.csv', 'r', newline=''):
-                pass
-        except FileNotFoundError:
-            with open('vendas.csv', 'w', newline='') as file:
-                writer = csv.writer(file)
-                writer.writerow(['Produto', 'Data', 'Quantidade']) 
 
-        with open('vendas.csv', 'a', newline='') as file:
-            writer = csv.writer(file)
-            for venda in self.vendas:
-                writer.writerow([self.nome_produto, venda['data'], venda['quantidade']])
+        def registrar_vendas_csv(self):
+          try:
+              with open('vendas.csv', 'r', newline=''):
+                  pass
+          except FileNotFoundError:
+              with open('vendas.csv', 'w', newline='') as file:
+                  writer = csv.writer(file)
+                  writer.writerow(['Produto', 'Data', 'Quantidade']) 
+
+              with open('vendas.csv', 'a', newline='') as file:
+                  writer = csv.writer(file)
+                  for venda in self.vendas:
+                      writer.writerow([self.nome_produto, venda['data'], venda['quantidade']])
+
     
-    # definir nome, quantidade e limite de aviso
-    gasolina = Estoque("Gasolina", 0, 40)
-    alcool = Estoque("Álcool", 0, 40)
-    diesel = Estoque("Diesel", 0, 40)
-    energia_solar = Estoque("Energia Solar", 0, 40)
-    
-    while True:
+      # definir nome, quantidade e limite de aviso
+      gasolina = Estoque("Gasolina", 0, 40)
+      alcool = Estoque("Álcool", 0, 40)
+      diesel = Estoque("Diesel", 0, 40)
+      energia_solar = Estoque("Energia Solar", 0, 40)
+
+      while True:
         print("=-=" * 10)
         escolha = int(input('''[ 1 ] Vender Produto
 [ 2 ] Receber Produto
 [ 3 ] Verificar Estoque
 [ 4 ] Sair
 -> '''))
-    
+
         if escolha == 1:
             print("=-=" * 10)
             escolhido = int(input('''Produto a ser vendido: 
@@ -99,7 +100,7 @@ def Modulo1():
                 energia_solar.verificar_estoque()
             elif escolhido == 5:
                 continue
-    
+
         if escolha == 2:
             print("=-=" * 10)
             escolhido = int(input('''Produto a ser recebido: 
@@ -458,7 +459,7 @@ def Modulo5():
                 Relatorio_Energetico()
             case 4:
                 main()
-                
+
 def Modulo4():
   class PainelSolar:
     def __init__(self, potencia_nominal, area, eficiencia, alerta_minimo=100):
@@ -522,7 +523,7 @@ def main():
     escolha = int(input('Digite o número de um módulo que deseja operar: '))
 
     print('\n')
-    
+
     match escolha:
       case 1:
         Modulo1()
@@ -540,7 +541,7 @@ def main():
         break
       case _:
         print("Módulo inválido. Tente novamente.")
-        
+
 if __name__ == '__main__':
   main()
 
