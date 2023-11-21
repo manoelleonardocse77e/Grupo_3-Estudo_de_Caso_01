@@ -65,29 +65,33 @@ def servicos_automotivos():
 
 
 def Relatorio_Energetico():
-  EsolarGerada = 5000 
-  KWh = 0.12  
-  instalacao = 15000 
-  Econsumida = 10000
-  eficienciaE = (EsolarGerada/Econsumida) *100
-  economia = (Econsumida - EsolarGerada) * KWh
-  if economia>0:
-    retorno = instalacao/economia
-  else:
-    retorno = float('inf')
-  resultado = {'Eficiencia Energetica': eficienciaE, 
-             'Economia Atual': economia,
-             'Retorno de Investimento': retorno}
-  with open('analise_energia_solar.txt','w') as arquivo:
-    arquivo.write("Análise de Eficiência Energética e Economia\n")
-    arquivo.write(50* '-' + '\n')
-    for chave,valor in resultado.items():
-      arquivo.write(f"{chave}:{valor} \n")
-  energia_consumida = 10000  
-  EsolarGerada = 5000 
-  KWh = 0.12  
-  instalacao = 15000  
-  print("Análise salva no arquivo 'analise_energia_solar.txt'")
+  def Relatorio_Energetico():
+    # Read information from the CSV file created in module 4
+    with open('dados_energia_solar.csv', 'r', newline='') as file:
+        reader = csv.DictReader(file)
+        data = list(reader)
+
+    if not data:
+        print("No data found in the CSV file.")
+        return
+
+    # Extract relevant information from the CSV data
+    EsolarGerada = float(data[-1]['Energia Gerada (kWh)'])
+    Econsumida = float(data[-1]['Energia Consumida (kWh)'])
+    instalacao = float(data[-1]['Custo da Instalação'])
+    KWh = float(data[-1]['Custo por kWh'])
+
+    # Perform calculations
+    eficienciaE = (EsolarGerada / Econsumida) * 100
+    economia = (Econsumida - EsolarGerada) * KWh
+    retorno = instalacao / economia if economia > 0 else float('inf')
+
+    # Display the information on the screen
+    print("Análise de Eficiência Energética e Economia\n")
+    print(50 * '-')
+    print(f"Eficiência Energética: {eficienciaE:.2f}%")
+    print(f"Economia Atual: {economia:.2f} BRL")
+    print(f"Retorno de Investimento: {retorno:.2f} anos")
 while True:
   print(50*'-')
   print("\n 1 para acessar os relatorios de vendas \n 2 Desempenho dos servicos automotivos \n 3 para acessar o relatorio de energia \n 4 para retornar")
