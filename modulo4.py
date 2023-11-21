@@ -23,23 +23,3 @@ class PainelSolar:
     def alerta_falha(self, producao_atual):
         if producao_atual < self.alerta_minimo:
             print("Alerta: Produção de energia solar abaixo do limite mínimo.")
-
-# Exemplo de uso:
-painel_solar = PainelSolar(potencia_nominal=300, area=20, eficiencia=0.85, alerta_minimo=200)
-
-# Leitura de energia gerada
-radiacao_solar_1 = 5.0
-energia_gerada_1 = painel_solar.ler_energia_gerada(radiacao_solar_1)
-
-# Leitura posterior
-radiacao_solar_2 = 4.5
-energia_gerada_2 = painel_solar.ler_energia_gerada(radiacao_solar_2)
-
-# Análise de eficiência e economia
-energia_convencional = 1000
-percentual_economia = painel_solar.analise_eficiencia_economia(energia_convencional)
-print(f"Percentual de economia: {percentual_economia}%")
-
-# Alerta de falha
-producao_atual = 150
-painel_solar.alerta_falha(producao_atual)
